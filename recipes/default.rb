@@ -20,10 +20,10 @@
 include_recipe "rsyslog::client"
 
 unless node['rsyslog']['server'] 
-  if node['rsyslog']['logstash_server_ip'].nil?
-    logstash_server = search(:node, "role:log-server").first['ipaddress'] rescue nil
+  if node['rsyslog']['logstash_server'].nil?
+    logstash_server = search(:node, "role:log-server").first['hostname'] rescue nil
   else
-    logstash_server = node['rsyslog']['logstash_server_ip']
+    logstash_server = node['rsyslog']['logstash_server']
   end
 end
 
@@ -31,7 +31,7 @@ template "/etc/rsyslog.d/91-logstash.conf" do
   source "91-logstash.conf.erb"
   backup false
   variables(
-    :logstash_server_ip => logstash_server,
+    :server => logstash_server,
     :protocol => node['rsyslog']['protocol']
   )
   owner "root"

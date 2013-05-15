@@ -5,9 +5,9 @@ $MaxMessageSize 64k
 
 <% case @protocol -%>
 <% when "tcp" -%>
-*.*;auth,authpriv.none    @@<%= @logstash_server_ip %>:<%= node['rsyslog']['logstash_server_port'] %>
+*.*;auth,authpriv.none    @@<%= @server %>:<%= node['rsyslog']['logstash_server_port'] %>
 <% when "udp" -%>
-*.*;auth,authpriv.none    @<%= @logstash_server_ip %>:<%= node['rsyslog']['logstash_server_port'] %>
+*.*;auth,authpriv.none    @<%= @server %>:<%= node['rsyslog']['logstash_server_port'] %>
 <% end -%>
 
 
