@@ -1,8 +1,8 @@
 #
-# Cookbook Name:: rsyslog
-# Recipe:: client
+# Cookbook Name:: ktc-rsyslog
+# Recipe:: default
 #
-# Copyright 2009-2011, Opscode, Inc.
+# Copyright 2013, Robert Choi.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,7 +17,16 @@
 # limitations under the License.
 #
 
+chef_gem "chef-rewind"
+require 'chef/rewind'
+
+include_recipe "rsyslog::default"
 include_recipe "rsyslog::client"
+
+rewind :template => "/etc/rsyslog.d/50-default.conf" do
+  source "50-default-new.conf.erb"
+  cookbook_name "ktc-rsyslog"
+end
 
 unless node['rsyslog']['server'] 
   if node['rsyslog']['logstash_server'].nil?
