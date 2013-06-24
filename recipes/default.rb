@@ -21,7 +21,6 @@ chef_gem "chef-rewind"
 require 'chef/rewind'
 
 include_recipe "rsyslog::default"
-include_recipe "rsyslog::client"
 
 rewind :template => "/etc/rsyslog.d/50-default.conf" do
   source "50-default-new.conf.erb"
