@@ -18,4 +18,5 @@
 #
 
 default['rsyslog']['logstash_server_ip'] = nil
-default['rsyslog']['logstash_server_port'] = '5544'
+default['rsyslog']['logstash_server_port'] = '5514'
+normal['rsyslog']['protocol'] = 'udp'
