@@ -22,9 +22,11 @@ require 'chef/rewind'
 
 include_recipe "rsyslog::default"
 
-rewind :template => "/etc/rsyslog.d/50-default.conf" do
-  source "50-default-new.conf.erb"
-  cookbook_name "ktc-rsyslog"
+if node['rsyslog']['disable_local_log']
+  rewind :template => "/etc/rsyslog.d/50-default.conf" do
+    source "50-default-new.conf.erb"
+    cookbook_name "ktc-rsyslog"
+  end
 end
 
 unless node['rsyslog']['server']
