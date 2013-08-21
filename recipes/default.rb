@@ -27,7 +27,7 @@ rewind :template => "/etc/rsyslog.d/50-default.conf" do
   cookbook_name "ktc-rsyslog"
 end
 
-unless node['rsyslog']['server'] 
+unless node['rsyslog']['server']
   if node['rsyslog']['logstash_server'].nil?
     logstash_server = search(:node, "role:log-server").first['fqdn'] rescue nil
   else
