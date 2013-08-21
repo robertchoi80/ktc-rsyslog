@@ -17,6 +17,9 @@
 # limitations under the License.
 #
 
+include_attribute "rsyslog"
+
 default['rsyslog']['logstash_server_ip'] = nil
 default['rsyslog']['logstash_server_port'] = '5514'
-normal['rsyslog']['protocol'] = 'udp'
+default['rsyslog']['protocol'] = 'udp'
+default['rsyslog']['disable_local_log'] = false
