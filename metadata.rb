@@ -14,3 +14,4 @@ supports          "centos"
 supports          "redhat"
 
 depends           "rsyslog"
+depends           "hostsfile"
