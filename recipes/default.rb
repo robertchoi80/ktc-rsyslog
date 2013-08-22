@@ -48,7 +48,6 @@ template "/etc/rsyslog.d/91-logstash.conf" do
   group "root"
   mode 0644
   not_if { logstash_server.nil? }
-  notifies :create, "ruby_block[edit-etc-hosts]", :immediately
 end
 
 hostsfile_entry '127.0.0.1' do

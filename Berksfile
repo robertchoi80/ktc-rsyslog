@@ -12,3 +12,5 @@ group :integration do
 # add in a test cook for minitest or to twiddle an LWRP
 #  cookbook 'my_cook_test', :path => './test/cookbooks/my_cook_test'
 end
+
+cookbook 'hostsfile'
