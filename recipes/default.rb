@@ -48,20 +48,10 @@ template "/etc/rsyslog.d/91-logstash.conf" do
   group "root"
   mode 0644
   not_if { logstash_server.nil? }
-  notifies :create, "ruby_block[edit-etc-hosts]", :immediately
 end
 
-ruby_block 'edit-etc-hosts' do
-  block do
-    loopback_line = "127.0.0.1 #{node['fqdn']} localhost"
-
-    conf_file = Chef::Util::FileEdit.new("/etc/hosts")
-    conf_file.search_file_replace_line(/127\.0\.0\.1/, loopback_line)
-    conf_file.write_file
-
-    system('touch /var/lock/.edit_etc_hosts_done')
-  end
-  action :nothing
-  notifies :restart, "service[rsyslog]", :immediately
-  not_if "test -f /var/lock/.edit_etc_hosts_done"
+hostsfile_entry '127.0.0.1' do
+  hostname  node['fqdn']
+  aliases   ['localhost']
+  action    :update
 end
