@@ -14,3 +14,4 @@ group :integration do
 end
 
 cookbook 'hostsfile'
+cookbook "rsyslog"
