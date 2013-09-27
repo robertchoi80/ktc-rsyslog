@@ -1,3 +1,4 @@
+name              "ktc-rsyslog"
 maintainer        "Robert Choi"
 maintainer_email  "taeilchoi1@gmail.com"
 license           "Apache 2.0"
