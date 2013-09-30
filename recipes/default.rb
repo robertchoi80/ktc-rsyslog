@@ -52,12 +52,6 @@ end
 
 hostsfile_entry '127.0.0.1' do
   hostname  node['fqdn']
-  aliases   ['localhost']
-  action    :update
-end
-
-hostsfile_entry '127.0.1.1' do
-  hostname  node['fqdn']
-  aliases   [node['hostname']]
+  aliases   [node['hostname'], 'localhost']
   action    :update
 end
