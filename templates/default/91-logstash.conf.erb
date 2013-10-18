@@ -2,6 +2,18 @@
 # Do not edit, changes will be overwritten
 
 $MaxMessageSize 64k
+$WorkDirectory /var/spool/rsyslog
+$ActionQueueType <%= node['rsyslog']['queue']['type'] %>
+$ActionQueueSize 200000
+$ActionQueueFileName <%= node['rsyslog']['queue']['file_name'] %>
+$ActionQueueMaxFileSize 1g
+$ActionQueueMaxDiskSpace <%= node['rsyslog']['queue']['max_disk_space'] %>
+$ActionQueueLowWatermark 100000
+$ActionQueueHighWatermark 150000
+$ActionQueueDiscardMark 150000
+$ActionQueueDiscardSeverity 8
+$ActionQueueSaveOnShutdown on
+$ActionQueueWorkerThreads 1
 
 <% case @protocol -%>
 <% when "tcp" -%>

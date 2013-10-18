@@ -1,7 +1,5 @@
 ---
 driver_plugin: vagrant
-# if you want to use chef-zero instead of solo-search
-# uncomment this
 provisioner: chef_zero
 
 platforms:
@@ -18,7 +16,10 @@ suites:
 - name: default
   run_list:
     - recipe[ktc-rsyslog]
-  attributes: {}
+  attributes:
+    rsyslog:
+      logstash_server: 'localhost'
+      protocol: 'udp'
 
 clusters:
   default:
