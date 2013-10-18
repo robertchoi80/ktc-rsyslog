@@ -19,7 +19,11 @@
 
 include_attribute "rsyslog"
 
-default['rsyslog']['logstash_server_ip'] = nil
+default['rsyslog']['logstash_server'] = nil
 default['rsyslog']['logstash_server_port'] = '5514'
-default['rsyslog']['protocol'] = 'udp'
+default['rsyslog']['protocol'] = 'tcp'
 default['rsyslog']['disable_local_log'] = false
+
+default['rsyslog']['queue']['type'] = 'LinkedList'
+default['rsyslog']['queue']['file_name'] = 'syslog_disk_queue'
+default['rsyslog']['queue']['max_disk_space'] = '10g'
