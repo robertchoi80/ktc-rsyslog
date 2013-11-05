@@ -7,6 +7,17 @@
 $FileOwner syslog
 $FileGroup adm
 
+<% if node["rsyslog"]["include_dmesg"] %>
+$ModLoad imfile
+$InputFileName /var/log/dmesg
+$InputFileTag dmesg
+$InputFileStateFile stat-file-dmesg
+$InputFileSeverity debug
+$InputFileFacility local7
+$InputRunFileMonitor
+$InputFilePollInterval 5
+<% end %>
+
 #  Default rules for rsyslog.
 #
 #			For more information see rsyslog.conf(5) and /etc/rsyslog.conf
@@ -15,7 +26,12 @@ $FileGroup adm
 # First some standard log files.  Log by facility.
 #
 auth,authpriv.*			/var/log/auth.log
+
+<% if node["rsyslog"]["disable_local_log"] %>
 *.*;auth,authpriv.none,local0.none,local1.none,local2.none,local3.none,local4.none		-/var/log/syslog
+<% else %>
+*.*;auth,authpriv.none		-/var/log/syslog
+<% end %>
 #cron.*				/var/log/cron.log
 daemon.*			-/var/log/daemon.log
 kern.*				-/var/log/kern.log
@@ -44,12 +60,20 @@ news.notice			-/var/log/news/news.notice
 *.=debug;\
     auth,authpriv.none;\
     news.none;mail.none;\
+<% if node["rsyslog"]["disable_local_log"] %>
     local0.none,local1.none,local2.none,local3.none,local4.none	 -/var/log/debug
+<% else %>
+    -/var/log/debug
+<% end %>
 *.=info;*.=notice;*.=warn;\
     auth,authpriv.none;\
     cron,daemon.none;\
     mail,news.none;\
+<% if node["rsyslog"]["disable_local_log"] %>
     local0.none,local1.none,local2.none,local3.none,local4.none	 -/var/log/messages
+<% else %>
+    -/var/log/messages
+<% end %>
 
 #
 # Emergencies are sent to everybody logged in.

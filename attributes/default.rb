@@ -23,6 +23,7 @@ default['rsyslog']['logstash_server'] = nil
 default['rsyslog']['logstash_server_port'] = '5514'
 default['rsyslog']['protocol'] = 'tcp'
 default['rsyslog']['disable_local_log'] = false
+default['rsyslog']['include_dmesg'] = true
 
 default['rsyslog']['queue']['type'] = 'LinkedList'
 default['rsyslog']['queue']['file_name'] = 'syslog_disk_queue'

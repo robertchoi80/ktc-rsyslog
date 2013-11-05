@@ -19,7 +19,7 @@ suites:
   attributes:
     rsyslog:
       logstash_server: 'localhost'
-      protocol: 'udp'
+      protocol: 'tcp'
 
 clusters:
   default:
