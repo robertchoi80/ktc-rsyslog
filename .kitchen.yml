@@ -20,7 +20,3 @@ suites:
     rsyslog:
       logstash_server: 'localhost'
       protocol: 'tcp'
-
-clusters:
-  default:
-    - default
