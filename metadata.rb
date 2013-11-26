@@ -16,3 +16,4 @@ supports          "redhat"
 
 depends           "rsyslog"
 depends           "hostsfile"
+depends           "ktc-monitor"

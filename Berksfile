@@ -7,3 +7,8 @@ chef_api "https://chefdev.mkd2.ktc", node_name: "cookbook", client_key: ".cookbo
 site :opscode
 
 metadata
+
+group "integration" do
+  cookbook 'etcd'
+  cookbook 'ktc-testing'
+end

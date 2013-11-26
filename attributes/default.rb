@@ -28,3 +28,8 @@ default['rsyslog']['include_dmesg'] = true
 default['rsyslog']['queue']['type'] = 'LinkedList'
 default['rsyslog']['queue']['file_name'] = 'syslog_disk_queue'
 default['rsyslog']['queue']['max_disk_space'] = '10g'
+
+# process monitoring
+default["rsyslog"]["processes"] = [
+  { "name" => "rsyslogd", "shortname" => "rsyslogd" }
+]
