@@ -15,5 +15,5 @@ supports          "centos"
 supports          "redhat"
 
 depends           "rsyslog"
-depends           "hostsfile"
+depends           "hostsfile", ">= 2.4.1"
 depends           "ktc-monitor"
