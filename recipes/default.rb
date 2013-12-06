@@ -29,7 +29,7 @@ end
 
 unless node['rsyslog']['server']
   if node['rsyslog']['logstash_server'].nil?
-    logstash_server = search(:node, "role:log-server").first['fqdn'] rescue nil
+    logstash_server = search(:node, "recipes:#{node['rsyslog']['logstash_recipe']}").first['fqdn'] rescue nil
   else
     logstash_server = node['rsyslog']['logstash_server']
   end
