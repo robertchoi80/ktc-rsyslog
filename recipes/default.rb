@@ -50,6 +50,7 @@ end
 
 hostsfile_entry '127.0.0.1' do
   hostname  node['fqdn']
+  ip_address '127.0.0.1'
   aliases   [node['hostname'], 'localhost']
   action    :update
 end
