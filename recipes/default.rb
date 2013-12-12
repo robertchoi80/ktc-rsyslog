@@ -49,6 +49,8 @@ template "/etc/rsyslog.d/91-logstash.conf" do
   not_if { logstash_server.nil? }
 end
 
+# we use this to know if the monitors shoudl be registered
+monitor_loaded = node.run_context.loaded_recipe? "ktc-monitor::client"
 
 # process monitoring and sensu-check config
 processes = node['rsyslog']['processes']
@@ -59,9 +61,11 @@ processes.each do |process|
     handlers ["default"]
     standalone true
     interval 30
+    only_if { monitor_loaded }
   end
 end
 
 ktc_collectd_processes "rsyslog-processes" do
   input processes
+  only_if { monitor_loaded }
 end
