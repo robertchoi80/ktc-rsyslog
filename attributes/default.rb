@@ -26,6 +26,7 @@ default['rsyslog']['disable_local_log'] = false
 default['rsyslog']['include_dmesg'] = true
 default['rsyslog']['logstash_recipe'] = 'ktc-logging\\:\\:server_logstash'
 default['rsyslog']['preserve_fqdn'] = 'on'
+default['rsyslog']['version'] = '5.8.6-1ubuntu8.5'
 
 default['rsyslog']['queue']['type'] = 'LinkedList'
 default['rsyslog']['queue']['file_name'] = 'syslog_disk_queue'

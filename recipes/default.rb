@@ -22,6 +22,11 @@ require 'chef/rewind'
 
 include_recipe "rsyslog::default"
 
+rewind :package => "rsyslog" do
+  version node['rsyslog']['version']
+  options "--force-yes"
+end
+
 rewind :template => "/etc/rsyslog.d/50-default.conf" do
   source "50-default-new.conf.erb"
   cookbook_name "ktc-rsyslog"
