@@ -21,6 +21,7 @@ chef_gem "chef-rewind"
 require 'chef/rewind'
 
 include_recipe "rsyslog::default"
+include_recipe "services"
 
 rewind :package => "rsyslog" do
   version node['rsyslog']['version']
@@ -34,8 +35,9 @@ end
 
 unless node['rsyslog']['server']
   if node['rsyslog']['logstash_server'].nil?
-    logstash_server = search(:node,
-      "recipes:#{node['rsyslog']['logstash_recipe']}").first['fqdn'] rescue nil
+    endpoint = Services::Endpoint.new "logstash-server"
+    endpoint.load
+    logstash_server = endpoint.ip
   else
     logstash_server = node['rsyslog']['logstash_server']
   end
