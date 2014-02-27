@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-include_attribute "rsyslog"
+include_attribute 'rsyslog'
 
 default['rsyslog']['logstash_server'] = nil
 default['rsyslog']['logstash_server_port'] = '5514'
@@ -33,6 +33,6 @@ default['rsyslog']['queue']['file_name'] = 'syslog_disk_queue'
 default['rsyslog']['queue']['max_disk_space'] = '10g'
 
 # process monitoring
-default["rsyslog"]["processes"] = [
-  { "name" => "rsyslogd", "shortname" => "rsyslogd" }
+default['rsyslog']['processes'] = [
+  { 'name' => 'rsyslogd', 'shortname' => 'rsyslogd' }
 ]
