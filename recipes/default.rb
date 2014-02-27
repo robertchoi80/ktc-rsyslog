@@ -17,25 +17,25 @@
 # limitations under the License.
 #
 
-chef_gem "chef-rewind"
+chef_gem 'chef-rewind'
 require 'chef/rewind'
 
-include_recipe "rsyslog::default"
-include_recipe "services"
+include_recipe 'rsyslog::default'
+include_recipe 'services'
 
-rewind :package => "rsyslog" do
+rewind package: 'rsyslog' do
   version node['rsyslog']['version']
-  options "--force-yes"
+  options '--force-yes'
 end
 
-rewind :template => "/etc/rsyslog.d/50-default.conf" do
-  source "50-default-new.conf.erb"
-  cookbook_name "ktc-rsyslog"
+rewind template: '/etc/rsyslog.d/50-default.conf' do
+  source '50-default-new.conf.erb'
+  cookbook_name 'ktc-rsyslog'
 end
 
 unless node['rsyslog']['server']
   if node['rsyslog']['logstash_server'].nil?
-    endpoint = Services::Endpoint.new "logstash-server"
+    endpoint = Services::Endpoint.new 'logstash-server'
     endpoint.load
     logstash_server = endpoint.ip
   else
@@ -43,21 +43,21 @@ unless node['rsyslog']['server']
   end
 end
 
-template "/etc/rsyslog.d/91-logstash.conf" do
-  source "91-logstash.conf.erb"
+template '/etc/rsyslog.d/91-logstash.conf' do
+  source '91-logstash.conf.erb'
   backup false
   variables(
-    :server => logstash_server,
-    :protocol => node['rsyslog']['protocol']
+    server: logstash_server,
+    protocol: node['rsyslog']['protocol']
   )
-  owner "root"
-  group "root"
+  owner 'root'
+  group 'root'
   mode 0644
   not_if { logstash_server.nil? }
 end
 
 # we use this to know if the monitors shoudl be registered
-monitor_loaded = node.run_context.loaded_recipe? "ktc-monitor::client"
+monitor_loaded = node.run_context.loaded_recipe? 'ktc-monitor::client'
 
 # process monitoring and sensu-check config
 processes = node['rsyslog']['processes']
@@ -65,14 +65,14 @@ processes = node['rsyslog']['processes']
 processes.each do |process|
   sensu_check "check_process_#{process['name']}" do
     command "check-procs.rb -c 10 -w 10 -C 1 -W 1 -p #{process['name']}"
-    handlers ["default"]
+    handlers ['default']
     standalone true
     interval 30
     only_if { monitor_loaded }
   end
 end
 
-ktc_collectd_processes "rsyslog-processes" do
+ktc_collectd_processes 'rsyslog-processes' do
   input processes
   only_if { monitor_loaded }
 end
