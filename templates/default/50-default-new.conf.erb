@@ -28,10 +28,18 @@ $InputFilePollInterval 5
 auth,authpriv.*			/var/log/auth.log
 
 <% if node["rsyslog"]["disable_local_log"] %>
-*.*;auth,authpriv.none,local0.none,local1.none,local2.none,local3.none,local4.none		-/var/log/syslog
+*.*;auth,authpriv.none,local0.none,local1.none,local2.none,local3.none,local4.none,local5.none,local6.none,local7.none		-/var/log/syslog
+<% elsif node["rsyslog"]["separate_logs"] %>
+*.*;auth,authpriv.none		-/var/log/syslog
+<%= node["rsyslog"]["nova_config_facility"] %>.*     -/var/log/openstack/nova.log
+<%= node["rsyslog"]["cinder_config_facility"] %>.*    -/var/log/openstack/cinder.log
+<%= node["rsyslog"]["quantum_config_facility"] %>.*   -/var/log/openstack/quantum.log
+<%= node["rsyslog"]["glance_config_facility"] %>.*    -/var/log/openstack/glance.log
+<%= node["rsyslog"]["keystone_config_facility"] %>.*  -/var/log/openstack/keystone.log
 <% else %>
 *.*;auth,authpriv.none		-/var/log/syslog
 <% end %>
+
 #cron.*				/var/log/cron.log
 daemon.*			-/var/log/daemon.log
 kern.*				-/var/log/kern.log
@@ -61,7 +69,7 @@ news.notice			-/var/log/news/news.notice
     auth,authpriv.none;\
     news.none;mail.none;\
 <% if node["rsyslog"]["disable_local_log"] %>
-    local0.none,local1.none,local2.none,local3.none,local4.none	 -/var/log/debug
+    local0.none,local1.none,local2.none,local3.none,local4.none,local5.none,local6.none,local7.none	 -/var/log/debug
 <% else %>
     -/var/log/debug
 <% end %>
@@ -70,7 +78,7 @@ news.notice			-/var/log/news/news.notice
     cron,daemon.none;\
     mail,news.none;\
 <% if node["rsyslog"]["disable_local_log"] %>
-    local0.none,local1.none,local2.none,local3.none,local4.none	 -/var/log/messages
+    local0.none,local1.none,local2.none,local3.none,local4.none,local5.none,local6.none,local7.none	 -/var/log/messages
 <% else %>
     -/var/log/messages
 <% end %>
