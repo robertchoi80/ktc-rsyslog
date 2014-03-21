@@ -24,7 +24,7 @@ default['rsyslog']['logstash_server_port'] = '5514'
 default['rsyslog']['protocol'] = 'tcp'
 default['rsyslog']['logstash_recipe'] = 'ktc-logging\\:\\:server_logstash'
 default['rsyslog']['preserve_fqdn'] = 'on'
-default['rsyslog']['version'] = '5.8.6-1ubuntu8.5'
+default['rsyslog']['version'] = '5.8.6-1ubuntu8.6'
 
 # Logging options
 default['rsyslog']['disable_local_log'] = false
