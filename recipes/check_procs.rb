@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: ktc-rsyslog
-# Recipe:: logrotate
+# Recipe:: check_proc
 #
 # Copyright 2013, Robert Choi.
 #
@@ -17,14 +17,23 @@
 # limitations under the License.
 #
 
-include_recipe 'logrotate'
+# we use this to know if the monitors shoudl be registered
+monitor_loaded = node.run_context.loaded_recipe? 'ktc-monitor::client'
 
-logrotate_app 'openstack-logs' do
-  path '/var/log/openstack/*.log'
-  frequency nil
-  rotate 4
-  size '100M'
-  create '640 syslog adm'
-  sharedscripts true
-  postrotate "\treload rsyslog >/dev/null 2>&1 || true"
+# process monitoring and sensu-check config
+processes = node['rsyslog']['processes']
+
+processes.each do |process|
+  sensu_check "check_process_#{process['name']}" do
+    command "check-procs.rb -c 10 -w 10 -C 1 -W 1 -p #{process['name']}"
+    handlers ['default']
+    standalone true
+    interval 30
+    only_if { monitor_loaded }
+  end
+end
+
+ktc_collectd_processes 'rsyslog-processes' do
+  input processes
+  only_if { monitor_loaded }
 end
